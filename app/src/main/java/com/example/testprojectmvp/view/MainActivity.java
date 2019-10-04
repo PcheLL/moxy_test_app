@@ -1,7 +1,5 @@
 package com.example.testprojectmvp.view;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,34 +9,29 @@ import com.example.testprojectmvp.in.MainMVP;
 import com.example.testprojectmvp.presenter.MainPresenter;
 import com.example.testprojectmvp.R;
 
-import moxy.MvpDelegate;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import moxy.MvpActivity;
 import moxy.presenter.InjectPresenter;
 
 
-public class MainActivity extends AppCompatActivity implements MainMVP.View, View.OnClickListener {
+public class MainActivity extends MvpActivity implements MainMVP.View {
    // MainMVP.Presenter mPresenter;
-    TextView imageView;
-    Button button;
+    @BindView (R.id.textView) TextView textView;
+    @BindView (R.id.button) Button button;
     @InjectPresenter
-    MainPresenter mPresenter;
+    MainPresenter presenter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        imageView = findViewById(R.id.textView);
-        button = findViewById(R.id.button);
-        button.setOnClickListener(this);
-        mPresenter = new MainPresenter(this);
+        ButterKnife.bind(this);
+        button.setOnClickListener(v->presenter.clickButton());
     }
 
     @Override
-    public void onClick(View view) {
-        mPresenter.clickButton();
-    }
-
-    @Override
-    public void showMessage(String bitmap) {
-        imageView.setText(bitmap);
+    public void showMessage(int second) {
+        textView.setText(String.valueOf(second));
     }
 
 }
