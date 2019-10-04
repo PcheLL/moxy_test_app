@@ -1,22 +1,26 @@
-package com.example.testprojectmvp.View;
+package com.example.testprojectmvp.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.testprojectmvp.MainMVP;
-import com.example.testprojectmvp.Presenter.MainPresenter;
+import com.example.testprojectmvp.in.MainMVP;
+import com.example.testprojectmvp.presenter.MainPresenter;
 import com.example.testprojectmvp.R;
+
+import moxy.MvpDelegate;
+import moxy.presenter.InjectPresenter;
 
 
 public class MainActivity extends AppCompatActivity implements MainMVP.View, View.OnClickListener {
-    MainMVP.Presenter mPresenter;
+   // MainMVP.Presenter mPresenter;
     TextView imageView;
     Button button;
+    @InjectPresenter
+    MainPresenter mPresenter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +37,8 @@ public class MainActivity extends AppCompatActivity implements MainMVP.View, Vie
     }
 
     @Override
-    public void showImage(String bitmap) {
+    public void showMessage(String bitmap) {
         imageView.setText(bitmap);
     }
+
 }
