@@ -19,12 +19,46 @@ public class MainPresenter extends MvpPresenter<MainMVP.View> {
     private MainMVP.Model mModel;
     private int cl;
 
-    public MainPresenter(){
-        getViewState().showMessage(cl);
-    }
+    @SuppressLint("StaticFieldLeak")
+    public MainPresenter() {
+        new AsyncTask<Void, Integer, Void>() {
 
-    public void clickButton() {
-        cl++;
-        getViewState().showMessage(cl);
+            @Override
+            protected void onPreExecute() {
+                getViewState().showTimer();
+            }
+
+            @Override
+            protected Void doInBackground(Void... voids) {
+                for (int i = 10; i > 0; i--) {
+                    progressUpdate(i);
+                    sleepSeoond();
+                }
+                return null;
+            }
+
+            private void progressUpdate(int i) {
+                onProgressUpdate(i);
+            }
+
+            private void sleepSeoond() {
+                try {
+                    TimeUnit.SECONDS.sleep(1);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
+
+            @Override
+            protected void onProgressUpdate(Integer... values) {
+                getViewState().updateTimer(values[0]);
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                getViewState().hideTimer();
+            }
+        }.execute();
     }
 }

@@ -7,11 +7,11 @@ import moxy.viewstate.strategy.StateStrategyType;
 public interface MainMVP{
     @StateStrategyType(value = AddToEndStrategy.class)
     interface View extends MvpView {
-        void showMessage(int second);
+        void updateTimer(int second);
+        void showTimer();
+        void hideTimer();
     }
-    /*interface Presenter{
-        void clickButton();
-    }*/
+
     interface Model{
         String loadMessage();
     }
